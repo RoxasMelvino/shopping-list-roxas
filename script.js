@@ -4,6 +4,8 @@ const form = document.querySelector('form');
 const clearButton = document.querySelector('#clearButton');
 const cartShopping = document.querySelector('.fa-cart-shopping')
 const container = document.querySelector('.container');
+const icons = document.querySelectorAll('.fa-xmark');
+
 
 // functions ---
 function addItem(item) {
@@ -12,9 +14,16 @@ function addItem(item) {
     const addIcon = document.createElement('i');
     addIcon.className = "fa-solid fa-xmark";
 
+    // add a delete function to the x icons.
+    addIcon.addEventListener('click', (event) => {
+        removeItem(event.target);
+    });
+
     newItem.appendChild(text);
     newItem.appendChild(addIcon);
     items.appendChild(newItem);
+
+
 };
 
 function clearAll() {
@@ -42,15 +51,13 @@ function dragAndDrop() {
     console.log("work in progress");
 }; 
 
-function removeItem(itemNumber) {
-    const li = document.querySelectorAll('#items li')
-    console.log(li[itemNumber], "index: " + itemNumber);
-    li[itemNumber].remove();
-}
-
+function removeItem(item) {
+    item.parentElement.remove()
+};
 
 // Event listeners ---
 form.addEventListener('submit', (event) => {
+
     event.preventDefault();
 
     const item = document.querySelector('#inputItem').value;
@@ -60,13 +67,11 @@ form.addEventListener('submit', (event) => {
 clearButton.addEventListener('click', clearAll)
 cartShopping.addEventListener('dblclick', doubleClick);
 
-
-
-
-
-
-
-
-
-
-
+// if (items.children.length !== 0) {
+//     icons.addEventListener('click', () => {
+//         console.log('I have been clicked');
+//     })
+// } else {
+//     console.log('here');
+//     console.log(items.children.length);
+// }
