@@ -1,5 +1,5 @@
 const addItemButton = document.querySelector('#addItemButton');
-const items = document.querySelector('#items');
+const items = document.querySelector('ul#items');
 const form = document.querySelector('form');
 const clearButton = document.querySelector('#clearButton');
 
@@ -9,6 +9,8 @@ form.addEventListener('submit', (event) => {
     const item = document.querySelector('#inputItem').value;
     addItem(item);
 });
+
+clearButton.addEventListener('click', clearAll)
 
 
 function addItem(item) {
@@ -21,6 +23,15 @@ function addItem(item) {
     newItem.appendChild(addIcon);
     items.appendChild(newItem);
 };
+
+function clearAll() {
+    const li = document.querySelectorAll('li');
+    if (li.length > 0) {
+        li.forEach((item) => item.remove());
+    } else {
+        alert('List is empty.');
+    }
+}
 
 
 
