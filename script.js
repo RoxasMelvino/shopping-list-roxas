@@ -65,11 +65,11 @@ form.addEventListener('submit', (event) => {
 clearButton.addEventListener('click', clearAll)
 cartShopping.addEventListener('dblclick', doubleClick);
 
-// if (items.children.length !== 0) {
-//     icons.addEventListener('click', () => {
-//         console.log('I have been clicked');
-//     })
-// } else {
-//     console.log('here');
-//     console.log(items.children.length);
-// }
+/* 
+TODO --
+ - Filter the items by typing in the filter field
+ - Add local storage to persist items
+ - Click on an item to put into "edit mode" and add to form
+ - update item
+ -deply to netlify
+*/
