@@ -6,7 +6,6 @@ const cartShopping = document.querySelector('.fa-cart-shopping')
 const container = document.querySelector('.container');
 const icons = document.querySelectorAll('.fa-xmark');
 
-
 // functions ---
 function addItem(item) {
     const newItem = document.createElement('li');
@@ -57,7 +56,6 @@ function removeItem(item) {
 
 // Event listeners ---
 form.addEventListener('submit', (event) => {
-
     event.preventDefault();
 
     const item = document.querySelector('#inputItem').value;
