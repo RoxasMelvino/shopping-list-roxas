@@ -1,4 +1,4 @@
-// forms
+// form elements
 const addItemButton = document.querySelector('#addItemButton');
 const form = document.querySelector('form');
 const filterInput = document.querySelector('#input-filterItems')
@@ -26,16 +26,10 @@ function addItem(item) {
     newItem.appendChild(addIcon);
     items.appendChild(newItem);
 
-
+    updateUI();
 };
 
 function clearAll() {
-    // const li = document.querySelectorAll('li');
-    // if (li.length > 0) {
-    //     li.forEach((item) => item.remove());
-    // } else {
-    //     alert('List is empty.');
-    // }
     const currentListItems = document.querySelector('ul#items')
     if (currentListItems.children.length === 0) {
         alert('List is empty!')
@@ -43,12 +37,11 @@ function clearAll() {
         while(currentListItems.firstChild && currentListItems.children.length > 0) {
             currentListItems.removeChild(currentListItems.firstChild)
         }
+        updateUI();
     }
-    
-    
 };
 
-function doubleClick() {
+function doubleClickDarkMode() {
     if (document.body.style.backgroundColor !== "#0F141A") {
         document.body.style.backgroundColor = "#0F141A";
         document.body.style.color = "#fff";
@@ -66,6 +59,7 @@ function dragAndDrop() {
 
 function removeItem(item) {
     item.parentElement.remove()
+    updateUI();
 };
 
 function filterList(e) {
@@ -74,6 +68,17 @@ function filterList(e) {
         console.log(item.innerText);
     })
     console.log(e.key);
+}
+
+function updateUI () {
+    const items = document.querySelectorAll('#items li');
+    if (items.length === 0) {
+        filterInput.style.display = "none";
+        clearButton.style.display = "none";
+    } else {
+        filterInput.style.display = "inline";
+        clearButton.style.display = "inline";
+    }
 }
 
 // Event listeners ---
@@ -85,11 +90,13 @@ form.addEventListener('submit', (event) => {
 });
 
 clearButton.addEventListener('click', clearAll)
-cartShopping.addEventListener('dblclick', doubleClick);
+cartShopping.addEventListener('dblclick', doubleClickDarkMode);
 filterInput.addEventListener('keypress', filterList)
+updateUI()
 
 /* 
 TODO --
+ - Update the UI depending on the item list length (done)
  - Filter the items by typing in the filter field
  - Add local storage to persist items
  - Click on an item to put into "edit mode" and add to form
