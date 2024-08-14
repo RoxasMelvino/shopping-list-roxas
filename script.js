@@ -62,12 +62,19 @@ function removeItem(item) {
     updateUI();
 };
 
-function filterList(e) {
-    const items = document.querySelectorAll("#items li")
+function filterItems(e) {
+    const text = e.target.value.toLowerCase();
+    const items = document.querySelectorAll('#items li')
+    
     items.forEach((item) => {
-        console.log(item.innerText);
+        const itemName = item.firstChild.textContent.toLowerCase();
+        
+        if (itemName.indexOf(text) != -1) {
+            item.style.display = "flex"
+        } else {
+            item.style.display = "none"
+        }
     })
-    console.log(e.key);
 }
 
 function updateUI () {
@@ -91,7 +98,7 @@ form.addEventListener('submit', (event) => {
 
 clearButton.addEventListener('click', clearAll)
 cartShopping.addEventListener('dblclick', doubleClickDarkMode);
-filterInput.addEventListener('keypress', filterList)
+filterInput.addEventListener('input', filterItems)
 updateUI()
 
 /* 
