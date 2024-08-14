@@ -1,6 +1,10 @@
+// forms
 const addItemButton = document.querySelector('#addItemButton');
-const items = document.querySelector('ul#items');
 const form = document.querySelector('form');
+const filterInput = document.querySelector('#input-filterItems')
+
+// Elements
+const items = document.querySelector('ul#items');
 const clearButton = document.querySelector('#clearButton');
 const cartShopping = document.querySelector('.fa-cart-shopping')
 const container = document.querySelector('.container');
@@ -26,12 +30,22 @@ function addItem(item) {
 };
 
 function clearAll() {
-    const li = document.querySelectorAll('li');
-    if (li.length > 0) {
-        li.forEach((item) => item.remove());
+    // const li = document.querySelectorAll('li');
+    // if (li.length > 0) {
+    //     li.forEach((item) => item.remove());
+    // } else {
+    //     alert('List is empty.');
+    // }
+    const currentListItems = document.querySelector('ul#items')
+    if (currentListItems.children.length === 0) {
+        alert('List is empty!')
     } else {
-        alert('List is empty.');
+        while(currentListItems.firstChild && currentListItems.children.length > 0) {
+            currentListItems.removeChild(currentListItems.firstChild)
+        }
     }
+    
+    
 };
 
 function doubleClick() {
@@ -54,6 +68,14 @@ function removeItem(item) {
     item.parentElement.remove()
 };
 
+function filterList(e) {
+    const items = document.querySelectorAll("#items li")
+    items.forEach((item) => {
+        console.log(item.innerText);
+    })
+    console.log(e.key);
+}
+
 // Event listeners ---
 form.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -64,6 +86,7 @@ form.addEventListener('submit', (event) => {
 
 clearButton.addEventListener('click', clearAll)
 cartShopping.addEventListener('dblclick', doubleClick);
+filterInput.addEventListener('keypress', filterList)
 
 /* 
 TODO --
