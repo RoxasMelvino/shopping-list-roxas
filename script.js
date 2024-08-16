@@ -24,7 +24,8 @@ function addItemToDOM(item) {
     const newItem = document.createElement('li');
     const text = document.createTextNode(item);
     const deleteIcon = document.createElement('i');
-    const editIcon = document.createElement('i')
+    const editIcon = document.createElement('i');
+    
     editIcon.className = "fa-solid fa-pen-to-square";
     deleteIcon.className = "fa-solid fa-xmark";
 
@@ -36,16 +37,15 @@ function addItemToDOM(item) {
 
 function addItemToStorage(item) {
     const itemsFromStorage = getItemsFromStorage();
+
     itemsFromStorage.push(item);
     localStorage.setItem('items', JSON.stringify(itemsFromStorage));
 };
 
 function addItemSubmit(item) {
-    
     // check if edit mode is true
     if (isEditMode) {
         const itemToEdit = items.querySelector('.edit-mode');
-
         removeItemFromStorage(itemToEdit.textContent);
         itemToEdit.classList.remove('edit-mode');
         itemToEdit.remove()
@@ -57,11 +57,8 @@ function addItemSubmit(item) {
     }
 
     checkForDuplicates(item);
-    
     addItemToDOM(item);
-    
     addItemToStorage(item);
-    
     updateUI();
 };
 
@@ -79,16 +76,16 @@ function getItemsFromStorage() {
 
 function clearAll() {
     const currentListItems = document.querySelector('ul#items');
+
     if (currentListItems.children.length === 0) {
         alert('List is empty!');
     } else {
         while(currentListItems.firstChild && currentListItems.children.length > 0) {
             currentListItems.removeChild(currentListItems.firstChild);
         }
-        localStorage.removeItem('items')
+        localStorage.removeItem('items');
         updateUI();
     }
-
 };
 
 function doubleClickDarkMode() {
@@ -103,10 +100,6 @@ function doubleClickDarkMode() {
     };
 };
 
-function dragAndDrop() {
-    console.log("work in progress");
-}; 
-
 function onClickItem(e) {
     // add event listeners to those with the fa-xmark class
     if (e.target.classList.contains('fa-xmark')) {
@@ -114,53 +107,54 @@ function onClickItem(e) {
     } else if (e.target.classList.contains('fa-pen-to-square')) {
         setItemToEdit(e.target.parentElement);
     };
-}
+};
 
 function setItemToEdit(item) {
     isEditMode = true;
-    items.querySelectorAll('li').forEach(i => i.classList.remove('edit-mode'))
+    
+    items.querySelectorAll('li').forEach(i => i.classList.remove('edit-mode'));
+
     item.classList.add('edit-mode');
-    formButton.innerHTML = "<i class='fa-solid fa-pen'></i> Save Changes"
-
-    formButton.style.backgroundColor = "#63E6BE"
-    inputItem.value = item.textContent
-
-}
+    formButton.innerHTML = "<i class='fa-solid fa-pen'></i> Save Changes";
+    formButton.style.backgroundColor = "#63E6BE";
+    inputItem.value = item.textContent;
+};
 
 function removeItem(item) {
-    item.remove() // from the dom
+    item.remove(); // from the dom
 
-    removeItemFromStorage(item.textContent) // from localStorage
+    removeItemFromStorage(item.textContent); // from localStorage
+
     updateUI();
 };
 
 function removeItemFromStorage(item) {
     let itemsFromStorage = getItemsFromStorage();
 
-    itemsFromStorage = itemsFromStorage.filter((i) => i !== item)
+    itemsFromStorage = itemsFromStorage.filter((i) => i !== item);
 
     localStorage.setItem('items', JSON.stringify(itemsFromStorage));
-}
+};
 
 function filterItems(e) {
     const text = e.target.value.toLowerCase();
-    const items = document.querySelectorAll('#items li')
+    const items = document.querySelectorAll('#items li');
     
     items.forEach((item) => {
         const itemName = item.firstChild.textContent.toLowerCase();
         
         if (itemName.indexOf(text) != -1) {
-            item.style.display = "flex"
+            item.style.display = "flex";
         } else {
-            item.style.display = "none"
+            item.style.display = "none";
         }
-    })
-}
+    });
+};
 
 function checkForDuplicates(item) {
     const itemsFromStorage = getItemsFromStorage();
-    return itemsFromStorage.includes(item) 
-}
+    return itemsFromStorage.includes(item) ;
+};
 
 function updateUI () {
     inputItem.value = '';
@@ -175,11 +169,11 @@ function updateUI () {
         clearButton.style.display = "inline";
     }
 
-    formButton.innerText = "+ Add Item"
-    formButton.style.backgroundColor = "#FF4500"
+    formButton.innerText = "+ Add Item";
+    formButton.style.backgroundColor = "#FF4500";
 
     isEditMode = false;
-}
+};
 
 // Event listeners ---
 form.addEventListener('submit', (event) => {
@@ -188,19 +182,9 @@ form.addEventListener('submit', (event) => {
     addItemSubmit(inputItem.value);
 });
 
-clearButton.addEventListener('click', clearAll)
-items.addEventListener('click', onClickItem)
+clearButton.addEventListener('click', clearAll);
+items.addEventListener('click', onClickItem);
 cartShopping.addEventListener('dblclick', doubleClickDarkMode);
-filterInput.addEventListener('input', filterItems)
-document.addEventListener('DOMContentLoaded', displayItems)
-updateUI()
-
-
-
-/* 
-TODO --
- - Add local storage to persist items
- - Click on an item to put into "edit mode" and add to form
- - update item
- -deply to netlify
-*/
+filterInput.addEventListener('input', filterItems);
+document.addEventListener('DOMContentLoaded', displayItems);
+updateUI();
