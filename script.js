@@ -29,13 +29,7 @@ function addItemToDOM(item) {
 }
 
 function addItemToStorage(item) {
-    let itemsFromStorage;
-
-    if (localStorage.getItem('items') === null) {
-        itemsFromStorage = [];
-    } else {
-        itemsFromStorage = JSON.parse(localStorage.getItem('items'));
-    }
+    const itemsFromStorage = getItemsFromStorage();
 
     itemsFromStorage.push(item);
 
@@ -48,6 +42,18 @@ function addItemSubmit(item) {
     addItemToStorage(item);
     updateUI();
 };
+
+function getItemsFromStorage() {
+    let itemsFromStorage;
+
+    if (localStorage.getItem('items') === null) {
+        itemsFromStorage = [];
+    } else {
+        itemsFromStorage = JSON.parse(localStorage.getItem('items'));
+    }
+
+    return itemsFromStorage;
+}
 
 function clearAll() {
     const currentListItems = document.querySelector('ul#items')
