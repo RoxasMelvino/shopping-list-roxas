@@ -28,6 +28,11 @@ body {
     position: relative;
 }
 
+.edit-mode {
+    color: #ccc;
+    
+}
+
 #inputItem {
     padding: .5rem;
     width: 50%;
@@ -86,11 +91,20 @@ ul li {
     border-radius: 1rem;
     display: flex;
     justify-content: space-between;
+    gap: 5px;
 }
 
 ul li i {
-    color: #ff0000;
     cursor: pointer;
+}
+
+ul li i.fa-xmark {
+    color: #F00;
+    margin-left: auto;
+}
+
+ul li i.fa-pen-to-square {
+    color: #8A2BE2;
 }
 
 i.fa-cart-shopping {
