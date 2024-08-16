@@ -11,6 +11,12 @@ const container = document.querySelector('.container');
 const icons = document.querySelectorAll('.fa-xmark');
 
 // functions ---
+function displayItems() {
+    const itemsFromStorage = getItemsFromStorage();
+    itemsFromStorage.forEach(item => addItemToDOM(item));
+    updateUI()
+}
+
 
 function addItemToDOM(item) {
     const newItem = document.createElement('li');
@@ -130,6 +136,7 @@ form.addEventListener('submit', (event) => {
 clearButton.addEventListener('click', clearAll)
 cartShopping.addEventListener('dblclick', doubleClickDarkMode);
 filterInput.addEventListener('input', filterItems)
+document.addEventListener('DOMContentLoaded', displayItems)
 updateUI()
 
 
