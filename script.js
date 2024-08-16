@@ -11,7 +11,8 @@ const container = document.querySelector('.container');
 const icons = document.querySelectorAll('.fa-xmark');
 
 // functions ---
-function addItem(item) {
+
+function addItemToDOM(item) {
     const newItem = document.createElement('li');
     const text = document.createTextNode(item);
     const addIcon = document.createElement('i');
@@ -25,7 +26,26 @@ function addItem(item) {
     newItem.appendChild(text);
     newItem.appendChild(addIcon);
     items.appendChild(newItem);
+}
 
+function addItemToStorage(item) {
+    let itemsFromStorage;
+
+    if (localStorage.getItem('items') === null) {
+        itemsFromStorage = [];
+    } else {
+        itemsFromStorage = JSON.parse(localStorage.getItem('items'));
+    }
+
+    itemsFromStorage.push(item);
+
+    localStorage.setItem('items', JSON.stringify(itemsFromStorage));
+}
+
+function addItemSubmit(item) {
+    // create the elements
+    addItemToDOM(item);
+    addItemToStorage(item);
     updateUI();
 };
 
@@ -39,6 +59,7 @@ function clearAll() {
         }
         updateUI();
     }
+
 };
 
 function doubleClickDarkMode() {
@@ -61,6 +82,10 @@ function removeItem(item) {
     item.parentElement.remove()
     updateUI();
 };
+
+
+
+
 
 function filterItems(e) {
     const text = e.target.value.toLowerCase();
@@ -93,7 +118,7 @@ form.addEventListener('submit', (event) => {
     event.preventDefault();
 
     const item = document.querySelector('#inputItem').value;
-    addItem(item);
+    addItemSubmit(item);
 });
 
 clearButton.addEventListener('click', clearAll)
@@ -101,10 +126,10 @@ cartShopping.addEventListener('dblclick', doubleClickDarkMode);
 filterInput.addEventListener('input', filterItems)
 updateUI()
 
+
+
 /* 
 TODO --
- - Update the UI depending on the item list length (done)
- - Filter the items by typing in the filter field
  - Add local storage to persist items
  - Click on an item to put into "edit mode" and add to form
  - update item
