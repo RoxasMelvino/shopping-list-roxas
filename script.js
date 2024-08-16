@@ -24,11 +24,6 @@ function addItemToDOM(item) {
     const addIcon = document.createElement('i');
     addIcon.className = "fa-solid fa-xmark";
 
-    // add a delete function to the x icons.
-    addIcon.addEventListener('click', (event) => {
-        removeItem(event.target);
-    });
-
     newItem.appendChild(text);
     newItem.appendChild(addIcon);
     items.appendChild(newItem);
@@ -36,9 +31,7 @@ function addItemToDOM(item) {
 
 function addItemToStorage(item) {
     const itemsFromStorage = getItemsFromStorage();
-
     itemsFromStorage.push(item);
-
     localStorage.setItem('items', JSON.stringify(itemsFromStorage));
 }
 
@@ -69,6 +62,7 @@ function clearAll() {
         while(currentListItems.firstChild && currentListItems.children.length > 0) {
             currentListItems.removeChild(currentListItems.firstChild)
         }
+        localStorage.removeItem('items')
         updateUI();
     }
 
@@ -90,14 +84,27 @@ function dragAndDrop() {
     console.log("work in progress");
 }; 
 
+function onClickItem(e) {
+    // add event listeners to those with the fa-xmark class
+    if (e.target.classList.contains('fa-xmark')) {
+        removeItem(e.target.parentElement)
+    }
+}
+
 function removeItem(item) {
-    item.parentElement.remove()
+    item.remove() // from the dom
+
+    removeItemFromStorage(item.textContent) // from localStorage
     updateUI();
 };
 
+function removeItemFromStorage(item) {
+    let itemsFromStorage = getItemsFromStorage();
 
+    itemsFromStorage = itemsFromStorage.filter((i) => i !== item)
 
-
+    localStorage.setItem('items', JSON.stringify(itemsFromStorage));
+}
 
 function filterItems(e) {
     const text = e.target.value.toLowerCase();
@@ -134,6 +141,7 @@ form.addEventListener('submit', (event) => {
 });
 
 clearButton.addEventListener('click', clearAll)
+items.addEventListener('click', onClickItem)
 cartShopping.addEventListener('dblclick', doubleClickDarkMode);
 filterInput.addEventListener('input', filterItems)
 document.addEventListener('DOMContentLoaded', displayItems)
